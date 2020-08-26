@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e79c7200eb2b54894f7acc1714217e, type: 3}
+  m_Name: Tile Material Data
+  m_EditorClassIdentifier: 
+  walkableMaterial: {fileID: 2100000, guid: 2fae29f969ba2104883d953463712f18, type: 2}
+  unwalkableMaterial: {fileID: 2100000, guid: eaec9984302895f41a7a5aef6f0cf828, type: 2}
+  moveMaterial: {fileID: 2100000, guid: 91723c40387d7e94f8e86d7f13900f60, type: 2}
+  attackMaterial: {fileID: 2100000, guid: 8d25317d49ad5a6468465a2e08bc42e4, type: 2}
+  skillMaterial: {fileID: 2100000, guid: c27b8f7b9535db743bd225e255701062, type: 2}
