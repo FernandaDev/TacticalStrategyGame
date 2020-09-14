@@ -14,6 +14,12 @@ public class TileMaterialData : ScriptableObject
     [SerializeField] Material moveMaterial;
     public Material MoveMaterial { get { return moveMaterial; } }
 
+    [SerializeField] Material hoverMaterial;
+    public Material HoverMaterial { get { return hoverMaterial; } }
+
+    [SerializeField] Material targetSelectionMaterial;
+    public Material TargetSelectionMaterial { get { return targetSelectionMaterial; } }
+
     [SerializeField] Material attackMaterial;
     public Material AttackMaterial { get { return attackMaterial; } }
 

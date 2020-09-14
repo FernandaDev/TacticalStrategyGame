@@ -3,30 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class MovementController : MonoBehaviour, ICommandController
 {
-    public Action OnMovementEnd;
-    
+    public event Action OnCommandStart;
+    public event Action OnCommandAnimationEnd;
+
     [SerializeField] float movementSpeed = 2f;
 
     Unit unit;
     Stack<Tile> path = new Stack<Tile>();
 
-    private void Awake()
-    {
-        unit = GetComponent<Unit>();
-    }
+    private void Awake() => unit = GetComponent<Unit>();
 
-    private void Start() { }
+    //TODO should the movement controller do this?
 
-    public void Move(Tile destinationTile)
+    public void CreatePath(Tile destinationTile, List<Tile> selectableTiles)
     {
-        SetPath(destinationTile);
-    }
+        ResetPath();
 
-    void SetPath(Tile destinationTile)
-    {
-        path.Clear();
+        if (!selectableTiles.Contains(destinationTile) || destinationTile.HasUnitOver()) return;
 
         Tile currentTileToCheck = destinationTile;
 
@@ -36,10 +31,40 @@ public class MovementController : MonoBehaviour
                 path.Push(currentTileToCheck);
 
             currentTileToCheck = currentTileToCheck.parent;
+
+            currentTileToCheck?.TileMaterialController.SetMaterialByType(CommandType.Hover);
         }
 
-        if(path != null)
+        destinationTile.TileMaterialController.SetMaterialByType(CommandType.Target);
+    }
+
+    private void ResetPath()
+    {
+        if (path == null) return;
+
+        foreach (var tile in path)
+        {
+            if (!tile.HasUnitOver())
+                tile.TileMaterialController.SetMaterialByType(CommandType.Move);
+            else
+                tile.TileMaterialController.SetMaterialByType(CommandType.Default);
+        }
+
+        path.Clear();
+    }
+
+    public void MoveDirectlyTo(Tile to)
+    {
+        unit.transform.position = to.transform.position;
+    }
+
+    public void StartMove(Tile destinationTile)
+    {
+        if (path != null)
+        {
             StartCoroutine(MoveUnit());
+            OnCommandStart?.Invoke();
+        }
     }
 
     IEnumerator MoveUnit()
@@ -67,8 +92,8 @@ public class MovementController : MonoBehaviour
                     //yield return StartCoroutine(RotateTowards(tile.transform));
                 }
 
-                transform.position = Vector3.MoveTowards(transform.position, 
-                                                            targetTilePosition, 
+                transform.position = Vector3.MoveTowards(transform.position,
+                                                            targetTilePosition,
                                                             movementSpeed * Time.deltaTime);
                 transform.LookAt(2 * transform.position - targetTilePosition);
                 yield return null;
@@ -78,8 +103,15 @@ public class MovementController : MonoBehaviour
 
     private void EndMove()
     {
-        OnMovementEnd();
+        OnCommandAnimationEnd?.Invoke();
         unit.UpdateCurrentTile();
     }
-}
 
+    public bool IsSelectionViable(Tile selectedTile)
+    {
+        if (selectedTile.HasUnitOver())
+            return false;
+
+        return true;
+    }
+}

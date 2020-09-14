@@ -5,16 +5,17 @@ public class Tile : MonoBehaviour
 {
     [SerializeField][HideInInspector] bool isWalkable;
     [SerializeField][HideInInspector] int xCoord, yCoord;
-    [SerializeField][HideInInspector] List<Tile> neighbours = new List<Tile>();
+
+    [SerializeField] List<Tile> neighbours = new List<Tile>();
+    [HideInInspector] public List<Tile> Neighbours => neighbours; 
     
-    [HideInInspector] public List<Tile> Neighbours { get => neighbours; }
-    [HideInInspector] public Tile parent;
+    public Tile parent;
     public SearchData searchData = new SearchData();
 
     private Unit unitOverTile;
     public Unit UnitOverTile => unitOverTile;
 
-    private TileMaterialController tileMaterialController;
+    [SerializeField]private TileMaterialController tileMaterialController;
     public TileMaterialController TileMaterialController 
     {
         get {
@@ -71,7 +72,7 @@ public class Tile : MonoBehaviour
     {
         searchData.distanceToStartPoint = 0;
         searchData.IsVisited = false;
-        parent = null;
+        //parent = null;
         TileMaterialController.SetMaterialByType(CommandType.Default);
     }
 }

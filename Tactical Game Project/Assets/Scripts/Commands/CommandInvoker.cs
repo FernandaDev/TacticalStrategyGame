@@ -6,18 +6,15 @@ public class CommandInvoker : MonoBehaviour
 {
     static Queue<ICommand> commandQueue = new Queue<ICommand>();
 
-    bool isBusy = false; // TODO set up the busy thing
+    bool IsBusy() => commandQueue.Count > 0;
 
     public static void AddCommand(ICommand newCommand) => commandQueue.Enqueue(newCommand);
 
     private void Update()
     {
-        if(commandQueue.Count > 0)
+        if (commandQueue.Count > 0)
         {
-            if(!isBusy)
-            {
-                commandQueue.Dequeue().Execute();
-            }
+            commandQueue.Dequeue().Execute();
         }
     }
-} 
+}

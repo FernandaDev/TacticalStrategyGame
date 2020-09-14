@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20b8f17c952e7a44a0a69312dfa39af, type: 3}
   m_Name: Default Unit
   m_EditorClassIdentifier: 
-  movementDistance: 5
+  movementDistance: 4

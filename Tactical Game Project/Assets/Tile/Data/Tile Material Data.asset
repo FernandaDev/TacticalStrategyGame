@@ -15,5 +15,8 @@ MonoBehaviour:
   walkableMaterial: {fileID: 2100000, guid: 2fae29f969ba2104883d953463712f18, type: 2}
   unwalkableMaterial: {fileID: 2100000, guid: eaec9984302895f41a7a5aef6f0cf828, type: 2}
   moveMaterial: {fileID: 2100000, guid: 91723c40387d7e94f8e86d7f13900f60, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: ff8175cd84f1e104da58e09ab7623922, type: 2}
+  targetSelectionMaterial: {fileID: 2100000, guid: eb44c39fee7148c47863ed53e07a2bed,
+    type: 2}
   attackMaterial: {fileID: 2100000, guid: 8d25317d49ad5a6468465a2e08bc42e4, type: 2}
   skillMaterial: {fileID: 2100000, guid: c27b8f7b9535db743bd225e255701062, type: 2}

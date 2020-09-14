@@ -42,6 +42,12 @@ public class TileMaterialController : MonoBehaviour
             case CommandType.Skill:
                 Rend.sharedMaterial = tileMaterialData.SkillMaterial;
                 break;
+            case CommandType.Hover:
+                Rend.sharedMaterial = tileMaterialData.HoverMaterial;
+                break;
+            case CommandType.Target:
+                Rend.sharedMaterial = tileMaterialData.TargetSelectionMaterial;
+                break;
         }
     }
 }

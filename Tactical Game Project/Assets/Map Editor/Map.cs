@@ -48,12 +48,12 @@ public class Map : MonoBehaviour
         return null;
     }
 
-    public Tile GetCurrentTileFromWorld(Vector3 characterPosition)
+    public Tile GetCurrentTileFromWorld(Vector3 unitPosition)
     {
         // here we need to get the percentage of the position going through 0 to 1... 0 is left, 0.5 is the middle and 1 is the right
-        float percentX = (characterPosition.x + MapEditorSettings.GridSize / 2) / MapEditorSettings.GridSize;
+        float percentX = (unitPosition.x + MapEditorSettings.GridSize / 2) / MapEditorSettings.GridSize;
 
-        float percentY = (characterPosition.z + MapEditorSettings.GridSize / 2) / MapEditorSettings.GridSize;
+        float percentY = (unitPosition.z + MapEditorSettings.GridSize / 2) / MapEditorSettings.GridSize;
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
         // and then we need to convert it to a index of the node we are getting (that is why we subtract -1)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faa02b745bae5c4fa096d0eb0de77cf, type: 3}
   m_Name: Map Editor Data
   m_EditorClassIdentifier: 
-  gridSize: 15
+  gridSize: 11
   tilePrefab: {fileID: 8094431569483457480, guid: d2f4ae341f7d5094ca74c141696c58e4,
     type: 3}

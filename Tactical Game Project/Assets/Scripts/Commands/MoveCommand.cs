@@ -13,11 +13,11 @@
 
     public void Execute()
     {
-        _moveController.Move(_newTile);
+        _moveController.StartMove(_newTile);
     }
 
     public void Undo()
     {
-        _moveController.Move(_oldTile);
+        _moveController.MoveDirectlyTo(_oldTile);
     }
 }

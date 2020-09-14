@@ -10,18 +10,17 @@ public class Unit : MonoBehaviour
     public static event Action<Unit> OnUnitSelected;
     public static event Action<Unit> OnUnitDeselected;
 
-    public Menu unitMenu { get; private set; } //TODO decide if we realy need this reference here.
+    CommandMenu unitMenu;
+    public MovementController movementController { get; private set; }
 
     private void Awake()
     {
         CurrentTile = Map.Instance.GetCurrentTileFromWorld(transform.position);
-        unitMenu = GetComponentInChildren<Menu>();
+        unitMenu = GetComponentInChildren<CommandMenu>();
+        movementController = GetComponent<MovementController>();
     }
 
-    private void Start() 
-    {
-        UpdateCurrentTile();
-    }
+    private void Start() => UpdateCurrentTile();
     
     public void UpdateCurrentTile()
     {

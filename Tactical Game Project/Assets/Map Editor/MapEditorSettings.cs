@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -80,6 +81,8 @@ public class MapEditorSettings
             map = value;
         }
     }
+
+    List<GameObject> tilesGameObjectList;
 }
 
 
