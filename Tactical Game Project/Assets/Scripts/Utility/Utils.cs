@@ -12,10 +12,22 @@ public enum SelectionState
 
 public enum CommandType
 {
+    Move,
+    Attack,
+    Skill
+}
+
+public enum MaterialType
+{
     Default,
     Move,
     Attack,
     Skill,
     Hover,
     Target
+}
+
+public enum UnitClass
+{
+    Unit
 }

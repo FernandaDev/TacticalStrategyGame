@@ -6,8 +6,8 @@ public class MouseHandler : MonoBehaviour
 {
     public static MouseHandler Instance { get; private set; }
 
-    private Unit selectedUnit;
-    public Unit SelectedUnit
+    private static Unit selectedUnit;
+    public static Unit SelectedUnit
     {
         get => selectedUnit;
         private set
@@ -43,18 +43,17 @@ public class MouseHandler : MonoBehaviour
 
     Camera _cam;
     bool canSelect = true;
-
     bool canHover = false;
 
     private void OnEnable()
     {
-        InputReader.OnReadCommandStart += OnReadCommandStart;
-        InputReader.OnReadCommandEnd += OnReadCommandEnd;
+        CommandInputReader.OnReadCommandStart += OnReadCommandStart;
+        CommandInputReader.OnReadCommandEnd += OnReadCommandEnd;
     }
     private void OnDisable()
     {
-        InputReader.OnReadCommandStart -= OnReadCommandStart;
-        InputReader.OnReadCommandEnd -= OnReadCommandEnd;
+        CommandInputReader.OnReadCommandStart -= OnReadCommandStart;
+        CommandInputReader.OnReadCommandEnd -= OnReadCommandEnd;
     }
 
     void Awake()
@@ -112,8 +111,8 @@ public class MouseHandler : MonoBehaviour
                 break;
 
             case SelectionState.CommandTileSelection:
-                if (InputReader.Instance.SelectableTiles.Contains(selectedTile) &&
-                    InputReader.Instance.CurrentCommandController.IsSelectionViable(selectedTile))
+                if (CommandInputReader.Instance.SelectableTiles.Contains(selectedTile) &&
+                    CommandInputReader.Instance.CurrentCommandController.IsSelectionViable(selectedTile))
                 {
                     OnTileSelected?.Invoke(selectedTile);
                     canSelect = false;

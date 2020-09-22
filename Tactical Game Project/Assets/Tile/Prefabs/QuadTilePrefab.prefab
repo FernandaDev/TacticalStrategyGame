@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4278683401187850046}
-  - component: {fileID: 4985191711567483124}
   - component: {fileID: 3655528049722334796}
   - component: {fileID: 7205296531654634566}
   - component: {fileID: 3350288362128640777}
@@ -35,26 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &4985191711567483124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8094431569483457480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ad4472d9818d6458efd9277362e0f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isWalkable: 0
-  xCoord: 0
-  yCoord: 0
-  neighbours: []
-  parent: {fileID: 0}
-  searchData:
-    IsVisited: 0
-    distanceToStartPoint: 0
 --- !u!33 &3655528049722334796
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,3 +108,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMaterialData: {fileID: 11400000, guid: f0be537f327106f4ea8e4c59b5083fc0, type: 2}
+  rend: {fileID: 0}
+  defaultMaterial: {fileID: 0}

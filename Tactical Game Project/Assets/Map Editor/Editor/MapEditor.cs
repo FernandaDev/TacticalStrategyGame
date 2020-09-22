@@ -29,7 +29,7 @@ public class MapEditor : EditorWindow
         }
         EditorGUI.EndDisabledGroup();
 
-        EditorGUI.BeginDisabledGroup(MapEditorSettings.Map == null || MapEditorSettings.Map.tilesList.Count < 1);
+        EditorGUI.BeginDisabledGroup(MapEditorSettings.Map == null || MapEditorSettings.Map.tilesGOList.Count < 1);
         if (GUILayout.Button("Erase Map"))
         {
             EraseMap();
@@ -40,7 +40,7 @@ public class MapEditor : EditorWindow
 
         GUILayout.BeginHorizontal();
 
-        EditorGUI.BeginDisabledGroup(selectedObjects.Length < 1 || MapEditorSettings.Map == null || MapEditorSettings.Map.tilesList.Count < 1);
+        EditorGUI.BeginDisabledGroup(selectedObjects.Length < 1 || MapEditorSettings.Map == null || MapEditorSettings.Map.tilesGOList.Count < 1);
         if (GUILayout.Button("Set Walkable"))
         {
             SetWalkable(selectedObjects, true);
@@ -69,10 +69,10 @@ public class MapEditor : EditorWindow
 
     public void GenerateMap()
     {
-        if (MapEditorSettings.Map != null && MapEditorSettings.Map.tilesList.Count > 0)
+        if (MapEditorSettings.Map != null && MapEditorSettings.Map.tilesGOList.Count > 0)
             EraseMap();
 
-        if(MapEditorSettings.Map == null)
+        if (MapEditorSettings.Map == null)
         {
             MapEditorSettings.Map = new GameObject("Map").AddComponent<Map>();
         }
@@ -90,29 +90,27 @@ public class MapEditor : EditorWindow
 
     private void CreateTile(int x, int y)
     {
-        var tile = Instantiate(MapEditorSettings.TilePrefab);
-        tile.transform.parent = MapEditorSettings.Map.transform;
-        tile.name = $"Tile {x} , {y}";
-        tile.transform.position = -new Vector3(1, 0, 1) * (MapEditorSettings.GridSize - 1) * 0.5f + new Vector3(x, 0, y);
-        
-        var t = tile.GetComponent<Tile>();
-        if (t != null)
-        {
-            t.SetTileCoords(x, y);
-            t.IsWalkable = false;
-        }
-        MapEditorSettings.Map.tilesList.Add(tile.gameObject);
+        GameObject tileGO = Instantiate(MapEditorSettings.TilePrefab);
+        tileGO.transform.parent = MapEditorSettings.Map.transform;
+        tileGO.name = $"Tile {x} , {y}";
+        tileGO.transform.position = -new Vector3(1, 0, 1) * (MapEditorSettings.GridSize - 1) * 0.5f + new Vector3(x, 0, y);
+
+        Tile tile = tileGO.AddComponent<Tile>();
+        tile.SetTileCoords(x, y);
+        tile.IsWalkable = false;
+
+        MapEditorSettings.Map.tilesGOList.Add(tileGO.gameObject);
     }
 
     public void EraseMap()
     {
-        if (MapEditorSettings.Map.tilesList.Count > 0)
+        if (MapEditorSettings.Map.tilesGOList.Count > 0)
         {
-            foreach (var tile in MapEditorSettings.Map.tilesList)
+            foreach (var tile in MapEditorSettings.Map.tilesGOList)
             {
                 DestroyImmediate(tile);
             }
-            MapEditorSettings.Map.tilesList.Clear();
+            MapEditorSettings.Map.tilesGOList.Clear();
         }
 
         EditorUtility.SetDirty(MapEditorSettings.Map);

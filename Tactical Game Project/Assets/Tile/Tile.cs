@@ -3,19 +3,15 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField][HideInInspector] bool isWalkable;
-    [SerializeField][HideInInspector] int xCoord, yCoord;
+    [HideInInspector][SerializeField]bool isWalkable;
+    [HideInInspector][SerializeField]int xCoord, yCoord;
 
-    [SerializeField] List<Tile> neighbours = new List<Tile>();
-    [HideInInspector] public List<Tile> Neighbours => neighbours; 
-    
-    public Tile parent;
-    public SearchData searchData = new SearchData();
+    public Unit UnitOverTile { get; set; }
 
-    private Unit unitOverTile;
-    public Unit UnitOverTile => unitOverTile;
+    public List<Tile> Neighbours = new List<Tile>();
+    public SearchData searchData = new SearchData(); 
 
-    [SerializeField]private TileMaterialController tileMaterialController;
+    private TileMaterialController tileMaterialController;
     public TileMaterialController TileMaterialController 
     {
         get {
@@ -37,14 +33,9 @@ public class Tile : MonoBehaviour
 
     public bool HasUnitOver()
     {
-        if (unitOverTile != null) return true;
+        if (UnitOverTile != null) return true;
         
         return false;
-    }
-
-    public void UpdateUnitOverTile(Unit newUnit)
-    {
-        unitOverTile = newUnit;
     }
 
     public void SetTileCoords(int x, int y)
@@ -56,30 +47,30 @@ public class Tile : MonoBehaviour
     public void FindNeighbours()
     {
         if (xCoord > 0)
-            neighbours.Add(Map.Instance.GetTileAt(xCoord - 1, yCoord));
+            Neighbours.Add(Map.Instance.GetTileAt(xCoord - 1, yCoord));
 
         if (xCoord < MapEditorSettings.GridSize - 1)
-            neighbours.Add(Map.Instance.GetTileAt(xCoord + 1, yCoord));
+            Neighbours.Add(Map.Instance.GetTileAt(xCoord + 1, yCoord));
 
         if (yCoord > 0)
-            neighbours.Add(Map.Instance.GetTileAt(xCoord, yCoord - 1));
+            Neighbours.Add(Map.Instance.GetTileAt(xCoord, yCoord - 1));
 
         if (yCoord < MapEditorSettings.GridSize - 1)
-            neighbours.Add(Map.Instance.GetTileAt(xCoord, yCoord + 1));
+            Neighbours.Add(Map.Instance.GetTileAt(xCoord, yCoord + 1));
     }
 
     public void ResetSearchData()
     {
         searchData.distanceToStartPoint = 0;
         searchData.IsVisited = false;
-        //parent = null;
-        TileMaterialController.SetMaterialByType(CommandType.Default);
+        searchData.parent = null;
+        TileMaterialController.SetMaterialByType(MaterialType.Default);
     }
 }
 
-[System.Serializable]
 public class SearchData
 {
-    public bool IsVisited = false;
-    public int distanceToStartPoint = 0;
+    public Tile parent { get; set; }
+    public bool IsVisited { get; set; }
+    public int distanceToStartPoint { get; set; }
 }

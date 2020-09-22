@@ -23,29 +23,29 @@ public class TileMaterialController : MonoBehaviour
     public void SetWalkableMaterial(bool isWalkable)
     {
         defaultMaterial = isWalkable ? tileMaterialData.WalkableMaterial : tileMaterialData.UnwalkableMaterial;
-        SetMaterialByType(CommandType.Default);
+        SetMaterialByType(MaterialType.Default);
     }
 
-    public void SetMaterialByType(CommandType materialType)
+    public void SetMaterialByType(MaterialType materialType)
     {
         switch (materialType)
         {
-            case CommandType.Default:
+            case MaterialType.Default:
                 Rend.sharedMaterial = defaultMaterial;
                 break;
-            case CommandType.Move:
+            case MaterialType.Move:
                 Rend.sharedMaterial = tileMaterialData.MoveMaterial;
                 break;
-            case CommandType.Attack:
+            case MaterialType.Attack:
                 Rend.sharedMaterial = tileMaterialData.AttackMaterial;
                 break;
-            case CommandType.Skill:
+            case MaterialType.Skill:
                 Rend.sharedMaterial = tileMaterialData.SkillMaterial;
                 break;
-            case CommandType.Hover:
+            case MaterialType.Hover:
                 Rend.sharedMaterial = tileMaterialData.HoverMaterial;
                 break;
-            case CommandType.Target:
+            case MaterialType.Target:
                 Rend.sharedMaterial = tileMaterialData.TargetSelectionMaterial;
                 break;
         }

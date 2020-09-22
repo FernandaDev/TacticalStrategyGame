@@ -21,14 +21,21 @@ public class Map : MonoBehaviour
         }
     }
 
+    public List<GameObject> tilesGOList = new List<GameObject>();
+
+    public Dictionary<GameObject, Tile> tilemap = new Dictionary<GameObject, Tile>();
+
     private void Awake()
     {
-        FindAllNeighbours();
-
         StaticBatchingUtility.Combine(this.gameObject);
-    }
+        
+        foreach (GameObject tileGO in tilesGOList)
+        {
+            tilemap.Add(tileGO, tileGO.GetComponent<Tile>());
+        }
 
-    public List<GameObject> tilesList = new List<GameObject>();
+        FindAllNeighbours();
+    }
 
     public Tile GetTileAt(int xCoord, int yCoord)
     {
@@ -39,7 +46,7 @@ public class Map : MonoBehaviour
             for (int y = 0; y < MapEditorSettings.GridSize; y++)
             {
                 if (x == xCoord && y == yCoord)
-                    return tilesList[counter].GetComponent<Tile>();
+                    return tilemap[tilesGOList[counter]];
 
                 counter++;
             }
@@ -65,9 +72,9 @@ public class Map : MonoBehaviour
 
     public void FindAllNeighbours()
     {
-        for (int i = 0; i < tilesList.Count; i++)
+        for (int i = 0; i < tilesGOList.Count; i++)
         {
-            tilesList[i].GetComponent<Tile>()?.FindNeighbours();
+            tilemap[tilesGOList[i]]?.FindNeighbours();
         }
     }
 }

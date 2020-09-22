@@ -26,7 +26,7 @@ public static class BFS
                     {
                         if(!neighbour.searchData.IsVisited)
                         {
-                            neighbour.parent = processingTile;
+                            neighbour.searchData.parent = processingTile;
                             neighbour.searchData.IsVisited = true;
                             neighbour.searchData.distanceToStartPoint = 1 + processingTile.searchData.distanceToStartPoint;
 
@@ -96,7 +96,6 @@ public static class BFS
         foreach (var tile in tilesToReset)
         {
             tile.ResetSearchData();
-            tile.parent = null;
         }
         tilesToReset.Clear();
     }

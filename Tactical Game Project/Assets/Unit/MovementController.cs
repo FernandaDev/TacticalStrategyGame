@@ -30,12 +30,12 @@ public class MovementController : MonoBehaviour, ICommandController
             if (currentTileToCheck != unit.CurrentTile)
                 path.Push(currentTileToCheck);
 
-            currentTileToCheck = currentTileToCheck.parent;
+            currentTileToCheck = currentTileToCheck.searchData.parent;
 
-            currentTileToCheck?.TileMaterialController.SetMaterialByType(CommandType.Hover);
+            currentTileToCheck?.TileMaterialController.SetMaterialByType(MaterialType.Hover);
         }
 
-        destinationTile.TileMaterialController.SetMaterialByType(CommandType.Target);
+        destinationTile.TileMaterialController.SetMaterialByType(MaterialType.Target);
     }
 
     private void ResetPath()
@@ -45,9 +45,9 @@ public class MovementController : MonoBehaviour, ICommandController
         foreach (var tile in path)
         {
             if (!tile.HasUnitOver())
-                tile.TileMaterialController.SetMaterialByType(CommandType.Move);
+                tile.TileMaterialController.SetMaterialByType(MaterialType.Move);
             else
-                tile.TileMaterialController.SetMaterialByType(CommandType.Default);
+                tile.TileMaterialController.SetMaterialByType(MaterialType.Default);
         }
 
         path.Clear();

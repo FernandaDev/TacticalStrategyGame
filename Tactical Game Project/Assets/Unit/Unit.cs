@@ -4,41 +4,44 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public UnitData unitData;
-    [SerializeField]Tile currentTile;
-    public Tile CurrentTile { get => currentTile; private set => currentTile = value; }
+    public Tile CurrentTile { get; private set; }
 
     public static event Action<Unit> OnUnitSelected;
     public static event Action<Unit> OnUnitDeselected;
 
-    CommandMenu unitMenu;
+    UnitUIDisplay unitUIDisplay;
     public MovementController movementController { get; private set; }
 
     private void Awake()
     {
-        CurrentTile = Map.Instance.GetCurrentTileFromWorld(transform.position);
-        unitMenu = GetComponentInChildren<CommandMenu>();
+        unitUIDisplay = GetComponentInChildren<UnitUIDisplay>();
         movementController = GetComponent<MovementController>();
     }
 
-    private void Start() => UpdateCurrentTile();
+    private void Start()
+    {
+        UpdateCurrentTile();
+        if(unitData) unitUIDisplay.SetupDisplay(unitData);
+    }
     
     public void UpdateCurrentTile()
     {
-        currentTile.UpdateUnitOverTile(null); // before changing the new tile, we should reset the old one.
+        if(CurrentTile)
+            CurrentTile.UnitOverTile = null; // before changing the new tile, we should reset the old one.
 
-        currentTile = Map.Instance.GetCurrentTileFromWorld(transform.position);
-        currentTile.UpdateUnitOverTile(this);
+        CurrentTile = Map.Instance.GetCurrentTileFromWorld(transform.position);
+        CurrentTile.UnitOverTile = this;
     }
 
     public void OnSelected()
     {
         OnUnitSelected?.Invoke(this);
-        unitMenu.ShowMenu(true);
+        unitUIDisplay.commandMenuDisplay.ShowMenu(true);
     }
 
     public void OnDeselected()
     {
         OnUnitDeselected?.Invoke(this);
-        unitMenu.ShowMenu(false);
+        unitUIDisplay.commandMenuDisplay.ShowMenu(false);
     }
 }

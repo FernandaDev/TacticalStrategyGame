@@ -3,6 +3,8 @@
 [CreateAssetMenu(fileName ="Unit Data", menuName = "ScriptableObjects/Unit Data")]
 public class UnitData : ScriptableObject
 {
-    [SerializeField] int movementDistance;
-    public int MovementDistance => movementDistance;
+    public int MaxHealth;
+    public int MovementDistance;
+
+    public UnitClass Unitclass;
 }
