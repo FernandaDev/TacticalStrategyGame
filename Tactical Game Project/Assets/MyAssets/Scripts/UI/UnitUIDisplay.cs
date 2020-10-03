@@ -1,18 +1,33 @@
 ﻿using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
-public class UnitUIDisplay : MonoBehaviour
+namespace FernandaDev
 {
-    public TextMeshProUGUI unitName;
-    public TextMeshProUGUI hpText;
-    public Slider hpSlider;
-    public CommandMenuDisplay commandMenuDisplay; //TODO do we need this?
-
-    public void SetupDisplay(UnitData unitData)
+    public class UnitUIDisplay : MonoBehaviour
     {
-        if (unitName) unitName.text  = unitData.Unitclass.ToString();
-        if (hpText)   hpText.text    = unitData.MaxHealth.ToString();
-        if (hpSlider) hpSlider.value = unitData.MaxHealth;
+        public TextMeshProUGUI unitName;
+        public BarDisplay hpBar;
+        public BarDisplay mpBar;
+        public CommandMenuDisplay commandMenuDisplay; //TODO do we need this?
+
+        UnitBaseData unitBaseData;
+
+        private void Awake()
+        {
+            unitBaseData = GetComponentInParent<Unit>().unitBaseData;
+            GetComponentInParent<Damageable>().OnHealthChangeCallback += OnHealthChanged;
+        }
+
+        private void Start()
+        {
+            if (unitName) unitName.text = unitBaseData.className;
+
+            hpBar.SetupValues(unitBaseData.classBaseStats.MaxHP);
+            mpBar.SetupValues(unitBaseData.classBaseStats.MaxMP);
+        }
+
+        void OnHealthChanged(float newHP) => hpBar.RefreshValues(newHP);
+
+        void OnManaChaged(float newMP) { }
     }
 }

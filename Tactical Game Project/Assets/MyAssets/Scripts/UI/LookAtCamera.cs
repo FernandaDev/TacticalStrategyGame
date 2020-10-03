@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 
-public class LookAtCamera : MonoBehaviour
+namespace FernandaDev
 {
-    [SerializeField] Camera _camera;
-
-    private void Awake()
+    public class LookAtCamera : MonoBehaviour
     {
-        if (_camera == null)
-            _camera = Camera.main;
-    }
+        [SerializeField] Camera _camera;
 
-    private void LateUpdate()
-    {
-        transform.LookAt(2 * transform.position - _camera.transform.position);
+        private void Awake()
+        {
+            if (_camera == null)
+                _camera = Camera.main;
+        }
+
+        private void LateUpdate()
+        {
+            transform.LookAt(2 * transform.position - _camera.transform.position);
+        }
     }
 }
